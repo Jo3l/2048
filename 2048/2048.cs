@@ -33,20 +33,31 @@ namespace Quique_2048
                 ConsoleKeyInfo key = Console.ReadKey();
                 switch (key.Key)
                 {
-                    case ConsoleKey.UpArrow:
-                        mov = 1;
+
+                    case ConsoleKey.LeftArrow:
+                        mov = 3;
+                        a = Merge(a);
                         break;
 
                     case ConsoleKey.DownArrow:
                         mov = 2;
-                        break;
-
-                    case ConsoleKey.LeftArrow:
-                        mov = 3;
+                        a = RotateGrid(a, 1);
+                        a = Merge(a);
+                        a = RotateGrid(a, -1);
                         break;
 
                     case ConsoleKey.RightArrow:
+                        a = RotateGrid(a, 2);
+                        a = Merge(a);
+                        a = RotateGrid(a, -2);
                         mov = 4;
+                        break;
+
+                    case ConsoleKey.UpArrow:
+                        mov = 1;
+                        a = RotateGrid(a, 3);
+                        a = Merge(a);
+                        a = RotateGrid(a, -3);
                         break;
                 }
 
@@ -84,7 +95,67 @@ namespace Quique_2048
             return listRandom[rnd];
         }
 
- 
+        public static int[,] Merge(int[,] a)
+        {
+
+            for (int i = 0; i < a.GetLength(0); i++)
+            {
+                int lastNum = 0;
+                int last_j = 0;
+                for (int j = 0; j < a.GetLength(1); j++)
+                {
+                    if (lastNum != a[i, j] && a[i, j] != 0)
+                    {
+                        lastNum = a[i, j];
+                        last_j = j;
+                    }
+                    else if (lastNum == a[i, j])
+                    {
+                        a[i, last_j] = 0;
+                        a[i, j] = lastNum + a[i, j];
+                    }
+                }
+
+                //empuja los numeros por el grid
+                last_j = 0;
+                for (int j = 0; j < a.GetLength(1); j++)
+                {
+                    if (a[i, j] != 0)
+                    {
+                        a[i, last_j] = a[i, j];
+                        if (last_j != j)
+                            a[i, j] = 0;
+                        last_j++;
+                    }
+                }
+            }
+            return a;
+        }
+
+        public static int[,] RotateGrid(int[,] a, int rotNum)
+        {
+            while (rotNum < 0)
+            {
+                rotNum += 4;
+            }
+            for (int rot_i = 0; rot_i < rotNum; rot_i++)
+            {
+                int[,] b = new int[a.GetLength(1), a.GetLength(0)];
+
+                for (int i = 0; i < a.GetLength(0); i++)
+                {
+                    for (int j = 0; j < a.GetLength(1); j++)
+                    {
+                        b[j, a.GetLength(0) - i - 1] = a[i, j];
+                    }
+                }
+
+                a = b;
+            }
+            return a;
+        }
+
+
         public static void ReDraw(int[,] a, int mov) // el repintado, que incluye el dibujo del grid donde iran los numeros
         {
             Console.Clear();
@@ -106,9 +177,11 @@ namespace Quique_2048
                     else if (a[i, j] < 10)
                         s = "  " + a[i, j] + " ";
                     else if (a[i, j] < 100)
-                        s = "  " + a[i, j] + " ";
+                        s = " " + a[i, j] + " ";
+                    else if (a[i, j] < 1000)
+                        s = a[i, j] + " ";
                     else
-                        s = "" + a[i, j]; //manda huevos que haya que poner las comillas para que no falle el compilador :P
+                        s = a[i, j]+"";
                     Console.Write(s + "│");
                 }
                 Console.Write("\n");
@@ -129,6 +202,8 @@ namespace Quique_2048
                 }
                 Console.Write("\n");
             }
+
+
 
             switch (mov) //esto se queda temporalmente para hacer debug cuando resuelva como sumar los elementos :P
             {
