@@ -27,7 +27,7 @@ namespace Quique_2048
             {
                 int mov = 0;
 
-                ConsoleKeyInfo key = Console.ReadKey(true);
+                ConsoleKeyInfo key = Console.ReadKey();
                 switch (key.Key)
                 {
 
