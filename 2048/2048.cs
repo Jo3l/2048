@@ -13,13 +13,14 @@ namespace Quique_2048
 
             do { MainGame(Menu()); }
             while (PlayAgain());
-            Environment.Exit(0);
 
         }
 
+
         static void MainGame(int option)
         {
-            int[,] a = new int[option, option]; 
+            ScoreTracker.Score = 0;
+            int[,] a = new int[option, option];
 
             ReDraw(a, 0); 
 
@@ -109,41 +110,38 @@ namespace Quique_2048
 
                     case ConsoleKey.D1:
                         return 6;
-                        break;
 
                     case ConsoleKey.D2:
                         return 4;
-                        break;
 
                     case ConsoleKey.D3:
+                        Environment.Exit(0);
                         return 0;
-                        break;
                 }
             }
             while (true);
         }
         public static bool PlayAgain()
         {
-            do
+
+            Console.WriteLine("¿Otra Partida? (s/n)");
+
+
+            while (true)
             {
-
-                Console.WriteLine("¿Otra Partida? (s/n)");
-
-                ConsoleKeyInfo key = Console.ReadKey();
+                ConsoleKeyInfo key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {
 
                     case ConsoleKey.S:
                         return true;
-                        break;
 
                     case ConsoleKey.N:
                         return false;
-                        break;
                 }
             }
-            while (true);
+            
         }
 
         public static Point RandomPoint(int[,] a)  //Para insertar el nº en una posicion aleatoria, creamos una lista con las posiciones "libres", donde con 2 For generamos todas las posiciones
@@ -187,6 +185,7 @@ namespace Quique_2048
                     {
                         a[i, last_j] = 0;
                         a[i, j] = lastNum + a[i, j];
+                        ScoreTracker.IncreaseScore(a[i, j]);
                     }
                 }
 
@@ -361,22 +360,24 @@ namespace Quique_2048
 
 
 
-            switch (mov) //esto se queda temporalmente para hacer debug cuando resuelva como sumar los elementos :P
-            {
+            //switch (mov) //esto se queda temporalmente para hacer debug cuando resuelva como sumar los elementos :P
+            //{
                 
-                case 1:
-                    Console.WriteLine("Izquierda");
-                    break;
-                case 2:
-                    Console.WriteLine("Abajo");
-                    break;
-                case 3:
-                    Console.WriteLine("Derecha");
-                    break;
-                case 4:
-                    Console.WriteLine("Arriba");
-                    break;
-            }
+            //    case 1:
+            //        Console.WriteLine("Izquierda");
+            //        break;
+            //    case 2:
+            //        Console.WriteLine("Abajo");
+            //        break;
+            //    case 3:
+            //        Console.WriteLine("Derecha");
+            //        break;
+            //    case 4:
+            //        Console.WriteLine("Arriba");
+            //        break;
+            //}
+
+            Console.WriteLine("Puntuación: "+ScoreTracker.Score);
 
 
         }
@@ -388,6 +389,17 @@ namespace Quique_2048
                 ReDraw(a,0);
                 Console.WriteLine("\n\n\t" + s + "\n\n");
 
+        }
+
+    }
+
+    public class ScoreTracker
+    {
+        public static int Score;
+
+        public static void IncreaseScore(int Amount)
+        {
+            Score += Amount;
         }
 
     }
