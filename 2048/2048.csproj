@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="2048.cs" />
+    <Compile Include="interface.cs" />
+    <Compile Include="logic.cs" />
+    <Compile Include="point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="scoretracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
