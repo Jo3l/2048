@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace Logic_2048
+namespace Game_2048
 {
     class Point
     {
