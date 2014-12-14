@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace Game_2048
+namespace Game2048
 {
-    class Point
+
+    //objeto que guarda la posicion aleatoria
+
+    class Point 
     {
         public Point(int x, int y)
         {
-            this.X = x;
+            this.X = x; 
             this.Y = y;
         }
 
