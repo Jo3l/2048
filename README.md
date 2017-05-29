@@ -1,7 +1,5 @@
-PR1-FERRANDO.E-2048
+2048 .net
 ===================
-
-1 Daw 1er trimestre
 
 En este juego para consola he intentado reunir conceptos y ejercicios que hemos hecho en clase para aplicarlos en un programa real
 
